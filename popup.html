@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { width: 300px; margin: 0; padding: 14px; font: 13px/1.45 system-ui, sans-serif; background: #18181b; color: #efeff1; }
+      h1 { font-size: 14px; margin: 0 0 10px; }
+      .row { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
+      .dot { width: 9px; height: 9px; border-radius: 50%; background: #666; flex-shrink: 0; }
+      .dot.ok.twitch { background: #eb0400; }
+      .dot.ok.kick { background: #53fc18; }
+      .dot.bad { background: #777; }
+      .name { font-weight: 600; width: 52px; }
+      .info { color: #c8c8d0; }
+      .info a { color: #bf94ff; }
+      label { display: block; margin: 12px 0 4px; font-weight: 600; }
+      .hint { color: #a0a0ab; font-size: 12px; margin: 0 0 6px; }
+      textarea { width: 100%; box-sizing: border-box; height: 74px; background: #0e0e10; color: #efeff1; border: 1px solid #3a3a44; border-radius: 4px; padding: 6px; font: 12px/1.4 ui-monospace, Consolas, monospace; resize: vertical; }
+      select { width: 100%; background: #0e0e10; color: #efeff1; border: 1px solid #3a3a44; border-radius: 4px; padding: 5px; }
+      button { margin-top: 8px; background: #9147ff; color: #fff; border: 0; border-radius: 4px; padding: 6px 12px; font-weight: 600; cursor: pointer; }
+      #saved { margin-left: 8px; color: #53fc18; }
+    </style>
+  </head>
+  <body>
+    <h1>Kwitch</h1>
+    <div class="row"><span class="dot twitch" id="twitch-dot"></span><span class="name">Twitch</span><span class="info" id="twitch-info">checking…</span></div>
+    <div class="row"><span class="dot kick" id="kick-dot"></span><span class="name">Kick</span><span class="info" id="kick-info">checking…</span></div>
+
+    <label for="mainSite">Main viewing site</label>
+    <p class="hint">When a followed channel streams on both sites at once, only this site's entry is shown.</p>
+    <select id="mainSite">
+      <option value="current">The site I'm on</option>
+      <option value="twitch">Twitch</option>
+      <option value="kick">Kick</option>
+    </select>
+
+    <label for="aliases">Same streamer, different names</label>
+    <p class="hint">One per line: <code>twitchname=kickname</code>. Channels with the same name or the same stream title are matched automatically.</p>
+    <textarea id="aliases" spellcheck="false" placeholder="zackrawrr=asmongold"></textarea>
+    <button id="save">Save</button><span id="saved"></span>
+    <script src="popup.js"></script>
+  </body>
+</html>
