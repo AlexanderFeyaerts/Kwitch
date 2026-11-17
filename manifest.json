@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Kwitch",
   "version": "1.0.0",
-  "description": "Shows your live followed Kick channels in the Twitch sidebar and your live followed Twitch channels in the Kick sidebar, sorted by viewers, without multistream duplicates.",
+  "description": "Your live followed Twitch and Kick channels in one sidebar on both sites, sorted by viewers, without multistream duplicates.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
