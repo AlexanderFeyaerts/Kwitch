@@ -36,7 +36,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "twitch-kick-live@local",
+      "id": "kwitch@alexanderfeyaerts",
       "strict_min_version": "121.0",
       "data_collection_permissions": {
         "required": ["none"]
