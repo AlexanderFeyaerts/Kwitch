@@ -23,16 +23,7 @@
     return (n) => nf.format(n);
   })();
 
-  function parseCount(text) {
-    const m = String(text || '').match(/(\d[\d.,\s]*)\s*([KkMm])?/);
-    if (!m) return null;
-    if (m[2]) {
-      const f = parseFloat(m[1].replace(/\s/g, '').replace(',', '.'));
-      return isNaN(f) ? null : Math.round(f * (/m/i.test(m[2]) ? 1e6 : 1e3));
-    }
-    const n = parseInt(m[1].replace(/[.,\s]/g, ''), 10);
-    return isNaN(n) ? null : n;
-  }
+  const parseCount = TKL.parseCount;
 
   function el(tag, cls, text) {
     const e = document.createElement(tag);
@@ -160,18 +151,7 @@
   let renderTimer = null;
 
   function plan() {
-    const preferOther = state.mainSite === OTHER;
-    const others = [];
-    const hiddenOwn = new Set();
-    for (const o of state.other) {
-      const dup = state.own.find((s) => TKL.sameStreamer(o, s, state.aliases));
-      if (!dup) others.push(o);
-      else if (preferOther) {
-        others.push(o);
-        hiddenOwn.add(TKL.norm(dup.id));
-      }
-    }
-    return { others, hiddenOwn };
+    return TKL.plan(state.own, state.other, state.aliases, state.mainSite === OTHER);
   }
 
   function render() {

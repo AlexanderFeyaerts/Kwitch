@@ -89,6 +89,31 @@
   const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const normTitle = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
 
+  function parseCount(text) {
+    const m = String(text || '').match(/(\d[\d.,\s]*)\s*([KkMm])?/);
+    if (!m) return null;
+    if (m[2]) {
+      const f = parseFloat(m[1].replace(/\s/g, '').replace(',', '.'));
+      return isNaN(f) ? null : Math.round(f * (/m/i.test(m[2]) ? 1e6 : 1e3));
+    }
+    const n = parseInt(m[1].replace(/[.,\s]/g, ''), 10);
+    return isNaN(n) ? null : n;
+  }
+
+  function plan(own, other, aliases, preferOther) {
+    const others = [];
+    const hiddenOwn = new Set();
+    for (const o of other) {
+      const dup = own.find((s) => sameStreamer(o, s, aliases));
+      if (!dup) others.push(o);
+      else if (preferOther) {
+        others.push(o);
+        hiddenOwn.add(norm(dup.id));
+      }
+    }
+    return { others, hiddenOwn };
+  }
+
   function parseAliases(text) {
     const set = new Set();
     for (const line of String(text || '').split(/[\n,;]+/)) {
@@ -107,5 +132,5 @@
     return ta.length >= 12 && ta === normTitle(b.title);
   }
 
-  g.TKL = { fetchTwitch, fetchKick, norm, parseAliases, sameStreamer, TklError };
+  g.TKL = { fetchTwitch, fetchKick, norm, parseAliases, parseCount, plan, sameStreamer, TklError };
 })();
